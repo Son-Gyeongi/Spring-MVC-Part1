@@ -1,4 +1,4 @@
-<%--저장 결과 JSP--%>
+<%--회원 저장 뷰 결과 JSP--%>
 <%--<%@ page import="hello.servlet.domain.member.Member" %>--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
