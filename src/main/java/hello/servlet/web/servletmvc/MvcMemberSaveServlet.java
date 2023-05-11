@@ -41,7 +41,7 @@ public class MvcMemberSaveServlet extends HttpServlet {
         // request 객체 내부에 Map같은 내부 저장소가 있다. 거기에 member가 저장이 된다.
         request.setAttribute("member", member);
 
-        String viewPath = "WEB-INF/views/save-result.jsp";
+        String viewPath = "/WEB-INF/views/save-result.jsp";
         RequestDispatcher dispatcher = request.getRequestDispatcher(viewPath);// 이 경로로 넘어가겠다.
         dispatcher.forward(request, response); // 내부에서 호출
     }
