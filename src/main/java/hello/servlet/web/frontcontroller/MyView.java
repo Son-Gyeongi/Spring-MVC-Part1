@@ -5,6 +5,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 // 뷰 객체는 이후 다른 버전에서도 함께 사용하므로 패키지 위치를 frontcontroller 에 두었다.
 // 기존에 각 컨트롤러에서 했던 로직을 MyView 라는 곳에 로직을 만들어서 넣는다.
@@ -31,5 +32,20 @@ public class MyView {
          * 우선 JSP니깐 dispatcher.forward()하면 JSP가 자동으러 렌더링 된다.
          * 그래서 메서드 이름을 render()라고 했다.
          */
+    }
+
+    public void render(Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // model에 있는 데이터를 RequestAttribute로 바꾼다.
+        modelToRequestAttribute(model, request);
+        RequestDispatcher dispatcher = request.getRequestDispatcher(viewPath);
+        dispatcher.forward(request, response);
+    }
+
+    // model에 있는 데이터를 RequestAttribute로 바꾼다.
+    // model에 있는 값을 다 꺼내서 HttpServletRequest의 setAttribute에 다 넣는다.
+    // 여기 넣어야 JSP 표현식대로 편하게 꺼내서 쓸 수 있다.
+    // jsp는 request.setAttribute() 이게 필요하다. 여기서 값을 다 꺼내기 때문에
+    private void modelToRequestAttribute(Map<String, Object> model, HttpServletRequest request) {
+        model.forEach((key, value) -> request.setAttribute(key, value));
     }
 }
