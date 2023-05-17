@@ -5,7 +5,11 @@ import hello.servlet.web.frontcontroller.MyView;
 import hello.servlet.web.frontcontroller.v3.controller.MemberFormControllerV3;
 import hello.servlet.web.frontcontroller.v3.controller.MemberListControllerV3;
 import hello.servlet.web.frontcontroller.v3.controller.MemberSaveControllerV3;
+import hello.servlet.web.frontcontroller.v4.controller.MemberFormControllerV4;
+import hello.servlet.web.frontcontroller.v4.controller.MemberListControllerV4;
+import hello.servlet.web.frontcontroller.v4.controller.MemberSaveControllerV4;
 import hello.servlet.web.frontcontroller.v5.adapter.ControllerV3HandlerAdapter;
+import hello.servlet.web.frontcontroller.v5.adapter.ControllerV4HandlerAdapter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -39,14 +43,21 @@ public class FrontControllerServletV5 extends HttpServlet {
     private void initHandlerMappingMap() {
         // 기존처럼 매핑정보를 먼저 넣자.
         // 서블릿이 처음 생성이 될 때 controllerMap에 값을 넣어둔다.
-        // /front-controller/v3/members/new-form 이렇게 요청이 오면 MemberFormControllerV3가 실행이 된다.
+        // /front-controller/v5/v3/members/new-form 이렇게 요청이 오면 MemberFormControllerV3가 실행이 된다.
         handlerMappingMap.put("/front-controller/v5/v3/members/new-form", new MemberFormControllerV3());
         handlerMappingMap.put("/front-controller/v5/v3/members/save", new MemberSaveControllerV3());
         handlerMappingMap.put("/front-controller/v5/v3/members", new MemberListControllerV3());
+        // V4 추가
+        // /front-controller/v5/v4/members/new-form 이렇게 요청이 오면 MemberFormControllerV4가 실행이 된다.
+        handlerMappingMap.put("/front-controller/v5/v4/members/new-form", new MemberFormControllerV4());
+        handlerMappingMap.put("/front-controller/v5/v4/members/save", new MemberSaveControllerV4());
+        handlerMappingMap.put("/front-controller/v5/v4/members", new MemberListControllerV4());
     }
 
     private void initHandlerAdapters() {
         handlerAdapters.add(new ControllerV3HandlerAdapter());
+        // V4를 처리할 수 있는 어댑터 넣기
+        handlerAdapters.add(new ControllerV4HandlerAdapter());
     }
 
     @Override
@@ -54,6 +65,7 @@ public class FrontControllerServletV5 extends HttpServlet {
         // 매핑 정보를 가지고 handlerMappingMap에서 찾는 거
         // 요청정보를 가지고 핸들러를 찾아오세요.
         // MemberFormControllerV3
+        // MemberFormControllerV4
         Object handler = getHandler(request);
 
         // 예외처리
@@ -68,6 +80,7 @@ public class FrontControllerServletV5 extends HttpServlet {
         // 단순하게 handlerAdapters를 반복해서 찾으면 된다.
         // 핸들러 어댑터 찾아와
         // ControllerV3HandlerAdapter
+        // ControllerV4HandlerAdapter
         MyHandlerAdapter adapter = getHandlerAdapter(handler);
 
         // 핸들러 호출
@@ -96,6 +109,7 @@ public class FrontControllerServletV5 extends HttpServlet {
 
     private MyHandlerAdapter getHandlerAdapter(Object handler) {
         // MemberFormControllerV3
+        // MemberFormControllerV4
         for (MyHandlerAdapter adapter : handlerAdapters) {
             if (adapter.supports(handler)) {
                 return adapter;
