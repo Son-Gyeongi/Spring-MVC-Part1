@@ -29,7 +29,7 @@ public class FrontControllerServletV3 extends HttpServlet {
     // 생성자에다가 이 서블릿이 생성될 때 매핑 정보를 담아 둘거다.
     public FrontControllerServletV3() {
         // 서블릿이 처음 생성이 될 때 controllerMap에 값을 넣어둔다.
-        // /front-controller/v1/members/new-form 이렇게 요청이 오면 MemberFormControllerV1가 실행이 된다.
+        // /front-controller/v3/members/new-form 이렇게 요청이 오면 MemberFormControllerV3가 실행이 된다.
         controllerMap.put("/front-controller/v3/members/new-form", new MemberFormControllerV3());
         controllerMap.put("/front-controller/v3/members/save", new MemberSaveControllerV3());
         controllerMap.put("/front-controller/v3/members", new MemberListControllerV3());
@@ -44,8 +44,8 @@ public class FrontControllerServletV3 extends HttpServlet {
 
         // controllerMap에서 꺼낸다.
         // "/front-controller/v3/members/new-form" URI가 요청이 오면
-        // new MemberFormControllerV1() 객체 인스턴스가 반환이 된다.
-        // 참조변수를 ControllerV1 인터페이스로 하게되면 다형성이 적용되어서 해당 코드를 일관성 있게 사용할 수 있다.
+        // new MemberFormControllerV3() 객체 인스턴스가 반환이 된다.
+        // 참조변수를 ControllerV3 인터페이스로 하게되면 다형성이 적용되어서 해당 코드를 일관성 있게 사용할 수 있다.
         ControllerV3 controller = controllerMap.get(requestURI);
         // 예외처리
         if (controller == null) {
