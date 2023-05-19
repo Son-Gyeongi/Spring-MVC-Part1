@@ -15,6 +15,15 @@ public class OldController implements Controller {
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         // 호출이 되는지만 확인
         System.out.println("OldController.handleRequest");
-        return null;
+
+        // 뷰 리졸버를 알아보자
+        // 논리적 이름만 넣었다. 뷰 리졸버에서 물리적이름으로 바꿔야한다.
+        // 뷰가 없어서 오류 페이지가 나온다. -> 뷰 리졸버를 만들어줘야 한다.
+        /**
+         * application.properties에
+         * spring.mvc.view.prefix=/WEB-INF/views/
+         * spring.mvc.view.suffix=.jsp 적어주니깐 페이지가 잘 나왔다.
+         */
+        return new ModelAndView(("new-form"));
     }
 }
