@@ -23,6 +23,7 @@ public class OldController implements Controller {
          * application.properties에
          * spring.mvc.view.prefix=/WEB-INF/views/
          * spring.mvc.view.suffix=.jsp 적어주니깐 페이지가 잘 나왔다.
+         * 뷰 리졸버를 통해서 실제 뷰가 나온다.
          */
         return new ModelAndView(("new-form"));
     }
