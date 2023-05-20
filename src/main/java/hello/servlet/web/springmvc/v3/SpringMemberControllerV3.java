@@ -4,8 +4,8 @@ import hello.servlet.domain.member.Member;
 import hello.servlet.domain.member.MemberRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @Controller
@@ -15,13 +15,16 @@ public class SpringMemberControllerV3 {
     private MemberRepository memberRepository = MemberRepository.getInstance();
 
     // 회원 등록 폼
-    @RequestMapping("/new-form") // 매핑 URL이 겹치면 오류난다.
+    // GET인 경우에만 호출
+//    @RequestMapping(value = "/new-form", method = RequestMethod.GET) // 매핑 URL이 겹치면 오류난다.
+    @GetMapping("/new-form")
     public String newForm() {
         return "new-form"; // viewName만 반환
     }
 
     // 회원 저장
-    @RequestMapping("/save")
+//    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @PostMapping("/save")
     public String save(
             @RequestParam("username") String username,
             @RequestParam("age") int age, // 타입 캐스팅, 타입 변환까지 스프링에서 자동으로 처리해준다.
@@ -37,7 +40,8 @@ public class SpringMemberControllerV3 {
     }
 
     // 회원 목록
-    @RequestMapping // /springmvc/v3/members
+//    @RequestMapping(method = RequestMethod.GET) // /springmvc/v3/members
+    @GetMapping
     public String members(Model model) {
 
         List<Member> members = memberRepository.findAll();
